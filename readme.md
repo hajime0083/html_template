@@ -14,14 +14,13 @@
 
 ## 利用しているもの
 ### html
-スタート時テンプレート作成
+スタート時テンプレート作成：
 [HTML5 TEMPKATE GENERATOR](http://mizzz.jp/tg/)
 
-IE対策用js
+IE対策用js：
 [html5shiv](https://github.com/aFarkas/html5shiv)
 ###css
-CSSリセット
+CSSリセット：
 [HTML5 Doctor CSS Reset](http://www.cssreset.com/scripts/html5-doctor-css-reset-stylesheet/) 
 ###js
-jquery
-[jquery](http://jquery.com/)
+jquery：[jquery](http://jquery.com/)

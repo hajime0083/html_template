@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<title>templete</title>
-
 	<meta charset="utf-8">
+	<title>templete</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
 	<meta http-equiv="X-UA-Compatible" content="IE=7">
 	<!--[if lt IE 9]>
 	<script src="../js/html5shiv.js"></script>
@@ -20,9 +21,8 @@
 
 
 <header>
-	<h1><a href="/">site-name</a></h1>
-	<p><img src="http://cambelt.co/800x200" /></p>
 	<nav class="floatBox">
+		<h1 class="floatL"><a href="/">site-name</a></h1>
 		<?php include(dirname(__FILE__). '/template/menu.php'); ?>
 	</nav>
 </header>
@@ -35,36 +35,6 @@
 		<p>
 			テキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtext
 		</p>
-	</div>
-
-	<div class="floatBox mt10">
-		<div class="floatL w580 mr20">
-			<h3>header title(w4)</h3>
-			<p>
-				テキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtextテキストtext
-			</p>
-		</div>
-
-		<div class="floatL w200">
-			<div>
-				<h3>about</h3>
-				<dl>
-				<dt><img src="http://cambelt.co/200x40"></dt>
-				<dd>http://XXXXXXX.XXXX</dd>
-				</dl>
-			</div>
-			<div class="mt10">
-				<h3>header title(w6)</h3>
-				<nav>
-					<ul>
-						<li><a href="#"><img src="http://cambelt.co/200x40"></a></li>
-						<li><a href="#"><img src="http://cambelt.co/200x40"></a></li>
-						<li><a href="#"><img src="http://cambelt.co/200x40"></a></li>
-						<li><a href="#"><img src="http://cambelt.co/200x40"></a></li>
-					</ul>
-				</nav>
-			</div>
-		</div>
 	</div>
 
 </div>
