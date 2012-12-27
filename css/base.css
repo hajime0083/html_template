@@ -1,0 +1,41 @@
+/* base format */
+body
+{
+	text-align:center;
+	font-family:'Century Gothic' , sans-serif;
+}
+#wrap
+{
+	width:800px;
+	margin:0 auto;
+	text-align:left;
+}
+
+/* header */
+header nav
+{
+	text-align:right;
+}
+header nav li
+{
+	display: inline;
+	display: box;
+}
+header nav li a
+{
+	text-decoration:none;
+	color:#6a5acd;
+	font-size:18px;
+}
+
+/* main */
+#main
+{
+	margin:10px 0 0 0;
+}
+
+/* footer */
+footer
+{
+	margin:10px 0 0 0;
+}
