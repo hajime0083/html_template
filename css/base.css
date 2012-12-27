@@ -53,6 +53,24 @@ header nav li a
 	margin-bottom:10px;
 }
 
+/* pagetop */
+#page-top
+{
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+}
+#page-top a {
+	background: #6a5acd;
+	text-decoration: none;
+	color: #fff;
+	width: 100px;
+	padding: 10px 0;
+	text-align: center;
+	display: block;
+	border-radius: 5px;
+}
+
 /* footer */
 footer
 {

@@ -12,15 +12,14 @@
 * css
 * javascript(jquery)
 
+基本的にオ・レ・フレームワーク（というよりフレームワーク使ってない）
+
 ## 利用しているもの
 ### html
-スタート時テンプレート作成：
-[HTML5 TEMPKATE GENERATOR](http://mizzz.jp/tg/)
-
-IE対策用js：
-[html5shiv](https://github.com/aFarkas/html5shiv)
+* [HTML5 TEMPKATE GENERATOR](http://mizzz.jp/tg/)
+* [html5shiv](https://github.com/aFarkas/html5shiv)
 ###css
-CSSリセット：
-[HTML5 Doctor CSS Reset](http://www.cssreset.com/scripts/html5-doctor-css-reset-stylesheet/) 
+* [HTML5 Doctor CSS Reset](http://www.cssreset.com/scripts/html5-doctor-css-reset-stylesheet/) 
 ###js
-jquery：[jquery](http://jquery.com/)
+* [jquery](http://jquery.com/)
+* [jQueryでスクロールすると表示する系いろいろ::webOpixel](http://www.webopixel.net/javascript/538.html)
