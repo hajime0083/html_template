@@ -47,12 +47,34 @@ header nav li a
 #main h2
 {
 	margin-bottom:10px;
+	border-bottom:solid 1px #6a5acd;
+}
+#main h2:first-letter 
+{
+	color:#6a5acd;
 }
 #main h3
 {
 	margin-bottom:10px;
+	border-bottom:solid 1px #6a5acd;
 }
-
+#main h3:first-letter 
+{
+	color:#6a5acd;
+}
+#main h4
+{
+	font-size:10pt;
+}
+#main .dropcap p:first-letter {
+	font-size: 16pt;
+	font-weight:bold;
+}
+#main .moreread
+{
+	color: #6a5acd;
+	text-decoration: none;
+}
 /* pagetop */
 #page-top
 {
@@ -97,7 +119,11 @@ footer
 .floatR{
 	float: right;
 }
-
+/* text align */
+.txtR
+{
+	text-align:right;
+}
 /* width */
 .w200
 {

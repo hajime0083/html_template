@@ -5,7 +5,15 @@
 	<title>templete</title>
 
 	<?php include(dirname(__FILE__). '/template/header.html'); ?>
+	<script type="text/javascript" src="/js/lazyload.js"></script>
 
+	<script type="text/javascript">
+	$(function() {
+		$("img.lazy").lazyload({ 
+		    effect : "fadeIn"
+		});
+	});
+	</script>
 </head>
 <body>
 
@@ -62,6 +70,26 @@
 			テキストtextテキストtextテキストtext<br />
 		</p>
 	</div>
+
+
+	<div>
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+		<img class="lazy" src="http://cambelt.co/1x1" data-original="http://cambelt.co/300x300"  width="300" heigh="300">
+	</div>
+
+
+
+
 
 </div>
 
