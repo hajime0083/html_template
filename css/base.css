@@ -75,6 +75,11 @@ header nav li a
 	color: #6a5acd;
 	text-decoration: none;
 }
+#main .thumb img
+{
+	margin-right:5px;
+	margin-buttom:5px;
+}
 /* pagetop */
 #page-top
 {
