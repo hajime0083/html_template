@@ -16,7 +16,10 @@ p
 	line-height:120%;
 	font-size:10pt;
 }
-
+a
+{
+	color:#6a5acd;
+}
 /* header */
 header h1
 {
@@ -25,7 +28,6 @@ header h1
 header h1 a
 {
 	text-decoration:none;
-	color:#6a5acd;
 }
 header nav
 {
@@ -34,7 +36,6 @@ header nav
 header nav li a
 {
 	text-decoration:none;
-	color:#6a5acd;
 	font-size:18px;
 }
 
@@ -74,6 +75,11 @@ header nav li a
 {
 	color: #6a5acd;
 	text-decoration: none;
+}
+#main div .sslist dd
+{
+	margin-left:10px;
+	color:darkgray;
 }
 #main .thumb img
 {
