@@ -5,7 +5,7 @@ $cont  = "";
 $title = "";
 //ファイルを開く
 //モード[r]の読み込み専用
-if (! ($fp = @fopen ( "txt/txt_". $filename .".txt", "r" ))) {
+if (! ($fp = @fopen ( "pic/". $filename .".txt", "r" ))) {
 	$title = "エラー";
    	$cont .= "不正なページです";
 	$cont .= "<br />";

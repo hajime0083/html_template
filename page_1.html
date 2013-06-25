@@ -1,8 +1,9 @@
+<?php include(dirname(__FILE__). '/include/conf.php'); ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 
-	<title>templete</title>
+	<title>templete || <?php echo $sitename; ?></title>
 
 	<?php include(dirname(__FILE__). '/template/header.html'); ?>
 	<script type="text/javascript" src="/js/lazyload.js"></script>
@@ -44,18 +45,6 @@
 		</dl>
 		
 	</div>
-
-
-	<div class="thumb mt10">
-<?php 
-for($i=0;$i<50;$i++){
-	echo "<img class=\"lazy\" src=\"http://cambelt.co/1x1\" data-original=\"http://cambelt.co/50x50\"  width=\"50\" heigh=\"50\">";
-}
-?>
-
-	</div>
-
-</div>
 
 <?php include(dirname(__FILE__). '/template/footer.html'); ?>
 

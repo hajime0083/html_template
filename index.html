@@ -1,7 +1,8 @@
+<?php include(dirname(__FILE__). '/include/conf.php'); ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<title>templete</title>
+	<title>templete || <?php echo $sitename; ?></title>
 
 	<?php include(dirname(__FILE__). '/template/header.html'); ?>
 
@@ -12,13 +13,12 @@
 
 
 <header>
-	<h1><a href="/">site-name</a></h1>
+	<h1><a href="/"><?php echo $sitename; ?></a></h1>
 	<p><img src="http://cambelt.co/800x200" /></p>
 	<nav class="floatBox">
 		<?php include(dirname(__FILE__). '/template/menu.html'); ?>
 	</nav>
 </header>
-
 
 <div id="main">
 
@@ -44,7 +44,7 @@
 				<h3>about</h3>
 				<dl>
 				<dt><img src="http://cambelt.co/200x40"></dt>
-				<dd>http://XXXXXXX.XXXX</dd>
+				<dd><?php echo $siteurl; ?></dd>
 				</dl>
 				<p>textテキストtextテキストtextテキストtextテキスト</p>
 			</div>
