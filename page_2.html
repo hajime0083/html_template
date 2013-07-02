@@ -34,8 +34,23 @@
 
 	<div class="thumb mt10">
 <?php 
-	$targetDir ='/pic';
+	$targetDir ="./pic";
 	$dir = scandir($targetDir);
+
+	$filecnt = 0;
+	if($dir != false){
+		foreach ($dir as $tmpname){
+			if(!($tmpname == "." || $tmpname == "..")){
+				$filename = explode(".", $tmpname);
+				if(count($filename) == 2){
+					if($filename[1] == "jpg" || $filename[1] == "gif" || $filename[1] == "png"){
+						$filecnt ++ ;
+					}
+				}
+			}
+		}
+	}
+var_dump($filecnt);
 	$file_max = 0;
 	$i = 0;
 	foreach ($dir as $buff){
