@@ -9,6 +9,8 @@
 
 公開アドレス：未定
 
+テスト用appfog：[http://suisou.aws.af.cm/](http://suisou.aws.af.cm/)
+
 ## 作成
 * html5
 * css
