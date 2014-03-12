@@ -22,6 +22,7 @@ class IndexController extends BaseController {
 	{
 		// INDEXのみ画像を設定
 		$this->layout->main_img = 'http://cambelt.co/800x200';
+		$this->layout->pagename	= 'INDEX';
 		
 		// 更新履歴の取得
 		

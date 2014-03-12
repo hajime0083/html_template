@@ -20,17 +20,24 @@
 
 
 <header>
-	<h1><a href="/admin/">SUISOU ADMIN</a></h1>
+	
 </header>
 
 <div id="main" class="floatBox">
-	<nav class="floatL admin_menu">
-		<ul>
-			<li><a href="/admin/blog/">BLOG</a></li>
-			<li><a href="/admin/pictxt/">PIC & TXT</a></li>
-			<li><a href="/admin/user/">USER</a></li>
-		</ul>
-	</nav>
+	<div class="floatL">
+		<h1><a href="/admin/">SUISOU ADMIN</a></h1>
+		<h4 class="mt10">Admin Menu</h4>
+		<nav class="admin_menu">
+			<ul>
+				<li><a href="/admin/blog/">BLOG</a></li>
+				<li><a href="/admin/pictxt/">PIC & TXT</a></li>
+				<li><a href="/admin/offline/">OFFLINE</a></li>
+				<li><a href="/admin/link/">LINK</a></li>
+				<li><a href="/admin/genre/">GENRE</a></li>
+			</ul>
+		</nav>
+	</div>
+
 	<div class="floatL admin_cont">
 		<?php echo @$content;?>
 	</div>

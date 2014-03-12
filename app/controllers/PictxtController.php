@@ -9,6 +9,7 @@ class PictxtController extends BaseController {
 	{		
 		// 初期化
 		$pictxt_list = '';
+		$this->layout->pagename	= 'PIC&TEXT';
 		
 		// データの取得
 		$query_pictxt = DB::table('pictxts')
@@ -97,7 +98,7 @@ class PictxtController extends BaseController {
 		}
 		
 		// 本文データの取得
-		$file = File::get(public_path().DIRECTORY_SEPARATOR.'txt'.DIRECTORY_SEPARATOR.$txtdata->filename);
+		$file = File::get(public_path().DIRECTORY_SEPARATOR.'main'.DIRECTORY_SEPARATOR.'txt'.DIRECTORY_SEPARATOR.$txtdata->filename);
 		if(empty($file) || $file == FALSE){
 			// データが取得できなかった場合404リダイレクト
 			App::abort(404);
@@ -109,6 +110,7 @@ class PictxtController extends BaseController {
 		}
 		
 		// データのセット
+		$this->layout->pagename	= 'TEXT:'.$txtdata->title;
 		$data = array(
 			'title'			=> $txtdata->title,
 			'txt'			=> nl2br($file),

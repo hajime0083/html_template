@@ -20,7 +20,7 @@
 				<h3>about</h3>
 				<dl>
 				<dt><img src="http://cambelt.co/200x40"></dt>
-				<dd>http://xxxxx.xx.xx/</dd>
+				<dd><?php echo url('/').'/' ?></dd>
 				</dl>
 				<p>textテキストtextテキストtextテキストtextテキスト</p>
 			</div>

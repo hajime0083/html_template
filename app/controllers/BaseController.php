@@ -14,8 +14,12 @@ class BaseController extends Controller {
 		if ( ! is_null($this->layout))
 		{
 			$this->layout = View::make($this->layout);
-			// レイアウトのセット
-			$this->layout->main_img = '';
+			// テンプレートへのデータセット
+			$this->layout->main_img	= FALSE;
+			$this->layout->sitename	= 'SIOSOU';
+			$this->layout->since_start	= '2009';
+			$this->layout->js		= '';
+			$this->layout->css	= '';
 		}
 	}
 
