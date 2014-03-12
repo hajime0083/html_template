@@ -3,7 +3,7 @@
 class BaseAdminController extends Controller {
 	
 	public function __construct() {
-		$controllername = Request::controller()->controller;
+
 		if(Auth::guest()){
 			// 未ログイン時
 		}
