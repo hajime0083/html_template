@@ -55,7 +55,7 @@ class PictxtController extends BaseController {
 			'pictxt_list' => $pictxt_list,
 		);
 		
-		$this->layout->nest('content','pictxt',$data);
+		$this->layout->nest('content','user.pictxt',$data);
 	}
 	
 	/* getTxt
@@ -117,7 +117,7 @@ class PictxtController extends BaseController {
 			'updated_at'	=> $updated_at,
 		);
 		
-		$this->layout->nest('content','txt',$data);
+		$this->layout->nest('content','user.txt',$data);
 	}
 
 }

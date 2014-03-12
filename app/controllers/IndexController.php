@@ -34,7 +34,7 @@ class IndexController extends BaseController {
 			
 		);
 		
-		$this->layout->nest('content','index',$data);
+		$this->layout->nest('content','user.index',$data);
 	}
 
 }

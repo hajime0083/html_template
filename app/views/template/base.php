@@ -8,10 +8,10 @@
 	<!--[if lt IE 9]>
 	<script src="../js/html5shiv.js"></script>
 	<![endif]-->
-	<script type="text/javascript" src="../js/jquery.js"></script>
-	<script type="text/javascript" src="../js/base.js"></script>
-	<link type="text/css" rel="stylesheet" href="../css/html5-doctor-reset-stylesheet.css" />
-	<link type="text/css" rel="stylesheet" href="../css/base.css" />
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/base.js"></script>
+	<link type="text/css" rel="stylesheet" href="/css/html5-doctor-reset-stylesheet.css" />
+	<link type="text/css" rel="stylesheet" href="/css/base.css" />
 
 </head>
 <body>
