@@ -27,6 +27,8 @@ Route::get('/admin', array('uses' => 'AdminIndexController@getIndex'));
 Route::get('/admin/blog', array('uses' => 'AdminBlogController@getIndex'));
 Route::get('/admin/blog/edit/', array('uses' => 'AdminBlogController@getEdit'));
 Route::get('/admin/blog/edit/{id}', array('uses' => 'AdminBlogController@getEdit'));
+Route::get('/admin/blog/category/', array('uses' => 'AdminBlogController@getCategory'));
+Route::post('/admin/blog/category/', array('uses' => 'AdminBlogController@postCategory'));
 
 Route::get('/admin/user', array('uses' => 'AdminIndexController@getUser'));
 Route::post('/admin/user', array('uses' => 'AdminIndexController@postUser'));

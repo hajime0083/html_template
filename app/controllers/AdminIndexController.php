@@ -85,15 +85,30 @@ class AdminIndexController extends BaseAdminController {
 		$this->layout->nest('content','admin.user_index',$data);
 	}
 	
-	/* getUser
+	/* postUser
 	 * ユーザー情報管理
 	 */
 	public function postUser(){
+		
+		// バリデーション
+		$validator = Validator::make(
+			array(
+				'name' => 'Dayle',
+				'password' => 'lamepassword',
+				'email' => 'email@example.com'
+			),
+			array(
+				'name' => 'required',
+				'password' => 'required|min:8',
+				'email' => 'required|email|unique:users'
+			)
+		);
 
 		// データのセット
 		$data = array(
 			
 		);
 		$this->layout->nest('content','admin.user_index',$data);
+		
 	}
 }
