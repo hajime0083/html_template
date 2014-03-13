@@ -2,15 +2,13 @@
 
 class BaseAdminController extends Controller {
 	
+	var $login			= FALSE;
+	public $layout		='template.adminbase';
+	
 	public function __construct() {
-
-		if(Auth::guest()){
-			// 未ログイン時
-		}
+		 $this->login = Auth::check();
 	}
 	
-	public $layout='template.adminbase';
-
 	/**
 	 * Setup the layout used by the controller.
 	 *
@@ -21,6 +19,7 @@ class BaseAdminController extends Controller {
 		if ( ! is_null($this->layout))
 		{
 			$this->layout = View::make($this->layout);
+			$this->layout->login = $this->login;
 		}
 	}
 

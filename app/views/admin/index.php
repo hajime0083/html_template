@@ -18,5 +18,7 @@
 		<dd>リンク管理</dd>
 		<dt class="mt10"><a href="/admin/genre/">GENRE</a></dt>
 		<dd>ジャンル管理</dd>
+		<dt class="mt10"><a href="/admin/user/">USER</a></dt>
+		<dd>ユーザー情報管理</dd>
 	</dl>
 </div>

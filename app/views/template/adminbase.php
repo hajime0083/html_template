@@ -23,6 +23,7 @@
 	
 </header>
 
+<?php if(Auth::check()){ ?>
 <div id="main" class="floatBox">
 	<div class="floatL">
 		<h1><a href="/admin/">SUISOU ADMIN</a></h1>
@@ -34,6 +35,10 @@
 				<li><a href="/admin/offline/">OFFLINE</a></li>
 				<li><a href="/admin/link/">LINK</a></li>
 				<li><a href="/admin/genre/">GENRE</a></li>
+				<li><a href="/admin/user/">USER</a></li>
+			</ul>
+			<ul class="mt20">
+				<li><a href="/logout">LOGOUT</a></li>
 			</ul>
 		</nav>
 	</div>
@@ -42,7 +47,14 @@
 		<?php echo @$content;?>
 	</div>
 </div>
-
+<?php }else{ ?>
+	<div id="main">
+		<h1><a href="/admin/">SUISOU ADMIN</a></h1>
+		<div class="mt10">
+			<?php echo @$content;?>
+		</div>
+	</div>
+<?php } ?>
 <p id="page-top"><a href="#wrap">PAGE TOP</a></p>
 
 <footer>
