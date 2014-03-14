@@ -15,14 +15,14 @@
 			<table>
 				<tr>
 					<th>タイトル</th>
-					<th>投稿日</th>
 					<th>カテゴリ</th>
+					<th>投稿日</th>
 					<th>編集</th>
 					<th>削除</th>
 				</tr>
 			<?php foreach($blog_list as $blog_value){
 					echo "<tr>";
-					echo "<td>{$blog_value['title']}</td>";
+					echo "<td><a href='/blog/{$blog_value['id']}/' target='_blank'>{$blog_value['title']}</a></td>";
 					echo "<td>{$blog_value['genre']}</td>";
 					echo "<td>{$blog_value['created_at']}</td>";
 					echo "<td><a href='/admin/blog/edit/{$blog_value['id']}/'>編集</a></td>";

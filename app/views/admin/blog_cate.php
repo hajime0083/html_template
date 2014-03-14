@@ -13,19 +13,23 @@
 			?>
 			<table>
 				<tr>
+					<th>id</th>
 					<th>カテゴリ名</th>
 					<th style="width: 15%;">並び順</th>
 					<th style="width: 18%;">表示/非表示</th>
 				</tr>
 				<?php foreach($genre_list as $genre_value){
 					echo "<tr>";
+					echo "<td>{$genre_value->id}</td>";
 					echo '<td>'.Form::text('name['.$genre_value->id.']', Input::old('name', $genre_value->name)).'</td>';
 					echo '<td>'.Form::text('order['.$genre_value->id.']', Input::old('order', $genre_value->order)).'</td>';
 					echo '<td>'.Form::checkbox('active_flg['.$genre_value->id.']', BlogGenre::ACTIVE_FLG_YES,( $genre_value->active_flg == BlogGenre::ACTIVE_FLG_YES ) ? TRUE : FALSE).'</td>';
 					echo "</tr>";
-				}?>
+				}
+				echo Form::hidden('type', 'mod');
+				?>
 				<tr>
-					<td colspan="3" class="txtR"><?php echo Form::submit('更新');?></td>
+					<td colspan="4" class="txtR"><?php echo Form::submit('更新');?></td>
 				</tr>
 			</table>
 			<?php 
@@ -46,10 +50,11 @@
 				</tr>
 				<?php 
 					echo "<tr>";
-					echo '<td>'.Form::text('name[]', Input::old('name', '')).'</td>';
-					echo '<td>'.Form::text('order[]', Input::old('order', '')).'</td>';
-					echo '<td>'.Form::checkbox('active_flg[]', BlogGenre::ACTIVE_FLG_YES,TRUE).'</td>';
+					echo '<td>'.Form::text('name', Input::old('name', '')).'</td>';
+					echo '<td>'.Form::text('order', Input::old('order', '')).'</td>';
+					echo '<td>'.Form::checkbox('active_flg', BlogGenre::ACTIVE_FLG_YES,TRUE).'</td>';
 					echo "</tr>";
+					echo Form::hidden('type', 'add');
 				?>
 				<tr>
 					<td colspan="3" class="txtR"><?php echo Form::submit('新規登録');?></td>

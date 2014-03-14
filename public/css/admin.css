@@ -37,6 +37,13 @@ th{
 	font-size: 14px;
 	background-color: #BEE9EA;
 }
+label{
+	font-size: 12px;
+}
+dl{
+	font-size: 12px;
+}
+
 /* header */
 header h1
 {
@@ -131,7 +138,38 @@ footer
 	margin:10px 0 0 0;
 	border-top:solid 1px #1e90ff;
 }
-
+/* form */
+input[type='text'].form_ss{
+	width:20px;
+}
+input[type='text'].form_s{
+	width:50px;
+}
+input[type='text'].form_m{
+	width:300px;
+}
+input[type='text'].form_l{
+	width:500px;
+}
+textarea{
+	width:500px;
+}
+.form_s{
+	width:50px;
+}
+input[type='submit']{
+	width:100px;
+	padding: 10px;
+}
+input[type='button']{
+	width:100px;
+	padding: 10px;
+}
+/* message */
+.message{
+	color: #CD3F3F;
+	font-weight: bold;
+}
 /* float */
 .floatBox{
 	zoom: 100%;

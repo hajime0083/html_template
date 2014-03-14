@@ -22,11 +22,14 @@ Route::post('/login', array('before' => 'csrf','uses' => 'AdminIndexController@p
 Route::get('/logout', array('uses' => 'AdminIndexController@getLogout'));
 
 Route::When('admin','auth');
+Route::When('admin/*','auth');
 Route::get('/admin', array('uses' => 'AdminIndexController@getIndex'));
 
 Route::get('/admin/blog', array('uses' => 'AdminBlogController@getIndex'));
 Route::get('/admin/blog/edit/', array('uses' => 'AdminBlogController@getEdit'));
 Route::get('/admin/blog/edit/{id}', array('uses' => 'AdminBlogController@getEdit'));
+Route::post('/admin/blog/edit/', array('uses' => 'AdminBlogController@postEdit'));
+Route::post('/admin/blog/edit/{id}', array('uses' => 'AdminBlogController@postEdit'));
 Route::get('/admin/blog/category/', array('uses' => 'AdminBlogController@getCategory'));
 Route::post('/admin/blog/category/', array('uses' => 'AdminBlogController@postCategory'));
 

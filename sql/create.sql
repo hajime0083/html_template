@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50516
 File Encoding         : 65001
 
-Date: 2014-03-13 19:00:13
+Date: 2014-03-14 19:04:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,6 +48,7 @@ CREATE TABLE `blogs` (
   `blog_genre` int(11) DEFAULT NULL,
   `active_flg` tinyint(4) DEFAULT NULL,
   `draft_flg` tinyint(4) DEFAULT NULL,
+  `release_date` int(11) DEFAULT NULL,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -57,14 +58,14 @@ CREATE TABLE `blogs` (
 -- ----------------------------
 -- Records of blogs
 -- ----------------------------
-INSERT INTO `blogs` VALUES ('1', 'ブログタイトル１', 'テキストテキスト', 'テキストテキスト', '1', '1', '1', '0', '1388534400', null);
-INSERT INTO `blogs` VALUES ('2', 'ブログタイトル２', 'テキストテキスト２', 'テキストテキスト２', '2', '2', '1', '0', '1391212800', null);
-INSERT INTO `blogs` VALUES ('3', 'ブログタイトル３', 'テキストテキスト３', 'テキストテキスト３', '1', '3', '1', '0', '1393632000', null);
-INSERT INTO `blogs` VALUES ('4', 'ブログタイトル４', 'テキストテキスト４', 'テキストテキスト４', '2', '1', '1', '0', '1393718400', null);
-INSERT INTO `blogs` VALUES ('5', 'ブログタイトル５', 'テキストテキスト５', 'テキストテキスト５', '1', '2', '1', '0', '1393804800', null);
-INSERT INTO `blogs` VALUES ('6', 'ブログタイトル６', 'テキストテキスト６', 'テキストテキスト６', '2', '3', '1', '0', '1393891200', null);
-INSERT INTO `blogs` VALUES ('7', 'ブログタイトル７', 'テキストテキスト７', 'テキストテキスト７', '1', '1', '1', '0', '1399161600', null);
-INSERT INTO `blogs` VALUES ('8', 'ブログタイトル８', 'テキストテキスト８', 'テキストテキスト８', '2', '2', '1', '0', '1399161600', null);
+INSERT INTO `blogs` VALUES ('1', 'ブログタイトル１', 'テキストテキスト', 'テキストテキスト', '1', '1', '1', '0', '1388534400', '1388534400', null);
+INSERT INTO `blogs` VALUES ('2', 'ブログタイトル２', 'テキストテキスト２', 'テキストテキスト２', '2', '2', '1', '0', '1391212800', '1391212800', null);
+INSERT INTO `blogs` VALUES ('3', 'ブログタイトル３', 'テキストテキスト３\r\naaaaaaaaa', 'テキストテキスト３aaaaaaaa\r\naaaaaaaaaaaa\r\naaaa', '1', '1', '1', '0', '1394791260', '1393632000', '1394791368');
+INSERT INTO `blogs` VALUES ('4', 'ブログタイトル４', 'テキストテキスト４', 'テキストテキスト４', '2', '1', '1', '0', '1393718400', '1393718400', null);
+INSERT INTO `blogs` VALUES ('5', 'ブログタイトル５', 'テキストテキスト５', 'テキストテキスト５', '1', '2', '1', '0', '1393804800', '1393804800', null);
+INSERT INTO `blogs` VALUES ('6', 'ブログタイトル６', 'テキストテキスト６', 'テキストテキスト６', '2', '3', '1', '0', '1393891200', '1393891200', null);
+INSERT INTO `blogs` VALUES ('7', 'ブログタイトル７', 'テキストテキスト７', 'テキストテキスト７', '1', '1', '1', '0', '1399161600', '1399161600', null);
+INSERT INTO `blogs` VALUES ('8', 'ブログタイトル８', 'テキストテキスト８', 'テキストテキスト８', '2', '2', '1', '0', '1399161600', '1399161600', null);
 
 -- ----------------------------
 -- Table structure for genres
