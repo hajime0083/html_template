@@ -194,29 +194,51 @@ class AdminBlogController extends BaseAdminController {
 		
 		// データ成型
 		$insert_data = array(
-			'title' => $inputs['title'],
-			'body' => $inputs['body'],
-			'body_detail' => $inputs['body_detail'],
-			'blog_genre' => $inputs['blog_genre'],
-			'active_flg' => $inputs['active_flg'],
-			'draft_flg' => (isset($inputs['draft_flg'])?Blog::DRAFT_FLG_YES:Blog::DRAFT_FLG_NO),
-			'release_date' => (isset($inputs['reserve_flg'])?date('U'):$release_date),
-			'updated_at' => date('U'),
+			'title'			=> $inputs['title'],
+			'body'			=> $inputs['body'],
+			'body_detail'	=> $inputs['body_detail'],
+			'blog_genre'	=> $inputs['blog_genre'],
+			'active_flg'	=> $inputs['active_flg'],
+			'draft_flg'		=> (isset($inputs['draft_flg'])?Blog::DRAFT_FLG_YES:Blog::DRAFT_FLG_NO),
+			'release_date'	=> (isset($inputs['reserve_flg'])?date('U'):$release_date),
+			'updated_at'	=> date('U'),
 		);
+		$genre_insert = '';
+		if(isset($inputs['new_genre']) && !empty($inputs['new_genre_text'])){
+			$genre_insert = array(
+				'name'			=> $inputs['new_genre_text'],
+				'active_flg'	=> Genre::ACTIVE_FLG_YES,
+				'order'			=> 0
+			);
+		}
+		
 
 		if(is_null($id)){
 			// 新規登録
 			
 		}else{
 			try{
-				// 更新
 				DB::beginTransaction();
-				DB::table('blogs')
-				->where('id', $id)
-				->update($insert_data);
+				// 新規カテゴリの登録があった場合
+				if(!empty($genre_insert)){
+					$genre = new BlogGenre();
+					foreach($genre_insert as $genre_key => $genre_value){
+						$genre->{$genre_key} = $genre_value;
+					}
+					$genre->save();
+					$insert_data['blog_genre'] = $genre->id;
+				}
+				
+				// 更新
+				$blog = Blog::find($id);
+				foreach($insert_data as $insert_key => $insert_value){
+					$blog->{$insert_key} = $insert_value;
+				}
+				$blog->save();
+				
 				DB::commit();
 				
-				// 登録完了のリダイレクト
+				// 登録完了のメッセージ
 				Session::flash('message', '更新完了');
 			}catch(Exception $e){
 				DB::rollback();
@@ -261,22 +283,37 @@ class AdminBlogController extends BaseAdminController {
 			// エラーがあったら処理を中断
 			return Redirect::back()->withErrors($val)->withInput();
 		}
-		
-		// 登録処理
-		if($inputs['type'] == 'add'){
-			// 新規登録
 
-		}elseif($inputs['type'] == 'mod'){
-			// 更新
-			
+		// 登録処理
+		$insert_data = '';
+		foreach($inputs['name'] as $name_key => $name_value){
+			$active_flg = (isset($inputs['active_flg'][$name_key])?BlogGenre::ACTIVE_FLG_YES:BlogGenre::ACTIVE_FLG_NO);
+			$insert_data[$name_key] = array(
+				'name' => $name_value,
+				'active_flg' => $active_flg,
+				'order' => $inputs['order'][$name_key]
+			);
+		}
+		if(is_array($insert_data)){
+			try{
+				DB::beginTransaction();
+				foreach($insert_data as $insert_key => $insert_value){
+					$blog_genre = BlogGenre::find($insert_key);
+					foreach($insert_value as $insert_value_key => $insert_value_value){
+						$blog_genre->{$insert_value_key} = $insert_value_value;
+					}
+					$blog_genre->save();
+				}
+				DB::commit();
+				
+				// 登録完了のメッセージ
+				Session::flash('message', '更新完了');
+				
+			}catch(Exception $e){
+				DB::rollback();
+			}
 		}
 		
-		// データセット
-		$data = array(
-			
-		);
-//		$this->layout->nest('content','admin.blog_cate',$data);
-		
-var_dump($inputs);
+		return Redirect::back();
 	}
 }

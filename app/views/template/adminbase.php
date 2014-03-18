@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<title>Admin || SUISOU</title>
+	<title>Admin || <?php echo @$sitename; ?></title>
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=7">
@@ -26,7 +26,7 @@
 <?php if(Auth::check()){ ?>
 <div id="main" class="floatBox">
 	<div class="floatL">
-		<h1><a href="/admin/">SUISOU ADMIN</a></h1>
+		<h1><a href="/admin/"><?php echo @$sitename; ?> ADMIN</a></h1>
 		<h4 class="mt10">Admin Menu</h4>
 		<nav class="admin_menu">
 			<ul>
@@ -49,7 +49,7 @@
 </div>
 <?php }else{ ?>
 	<div id="main">
-		<h1><a href="/admin/">SUISOU ADMIN</a></h1>
+		<h1><a href="/admin/"><?php echo @$sitename; ?> ADMIN</a></h1>
 		<div class="mt10">
 			<?php echo @$content;?>
 		</div>
@@ -58,7 +58,7 @@
 <p id="page-top"><a href="#wrap">PAGE TOP</a></p>
 
 <footer>
-	<p>copyright&reg;SUISOU 2009-<?php echo date('Y')?><p>
+	<p>copyright&reg;<?php echo @$sitename; ?> 2009-<?php echo date('Y')?><p>
 </footer>
 
 </div>

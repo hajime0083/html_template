@@ -28,6 +28,11 @@
 		
 		<h4 class="mt20">カテゴリ</h4>
 		<div class="mt10">
+			<?php echo Form::label('new_genre','新しいカテゴリを追加：'); ?>
+			<?php echo Form::checkbox('new_genre',1,FALSE); ?>
+			<?php echo Form::text('new_genre_text',''); ?>
+			<br />
+			<?php echo Form::label('blog_genre','カテゴリを選択：'); ?>
 			<?php echo Form::select('blog_genre',$genre_list,$blog_genre); ?>
 		</div>
 		
