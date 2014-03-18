@@ -90,6 +90,9 @@ class AdminIndexController extends BaseAdminController {
 	 */
 	public function postUser(){
 		
+		// 値取得
+		$inputs = Input::all();
+		
 		// バリデーション
 		$validator = Validator::make(
 			array(
@@ -103,12 +106,11 @@ class AdminIndexController extends BaseAdminController {
 				'email' => 'required|email|unique:users'
 			)
 		);
+		
+		
 
-		// データのセット
-		$data = array(
-			
-		);
-		$this->layout->nest('content','admin.user_index',$data);
+		
+		return Redirect::back();
 		
 	}
 }

@@ -47,7 +47,7 @@
 		<h4 class="mt20">投稿日(未来の日付けにした場合、予約投稿になります)</h4>
 		<div class="mt10">
 			<?php echo Form::label('reserve_flg','即時投稿：'); ?>
-			<?php echo Form::checkbox('reserve_flg', 1,TRUE); ?>
+			<?php echo Form::checkbox('reserve_flg', 1,$reserve_flg); ?>
 		</div>
 		<div class="mt10">
 			<?php echo Form::text('release_year',$release_year,array('class'=>'form_s')); ?>年

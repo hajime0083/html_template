@@ -16,7 +16,7 @@
 				<tr>
 					<th>タイトル</th>
 					<th>カテゴリ</th>
-					<th>投稿日</th>
+					<th>公開日</th>
 					<th>編集</th>
 					<th>削除</th>
 				</tr>
@@ -38,6 +38,24 @@
 		<h4 class="mt20">下書き記事一覧</h4>
 		<div class="mt10">
 			<?php if(!empty($draftblog_list)){?>
+			<table>
+				<tr>
+					<th>タイトル</th>
+					<th>カテゴリ</th>
+					<th>投稿日</th>
+					<th>編集</th>
+					<th>削除</th>
+				</tr>
+			<?php foreach($draftblog_list as $draftblog_value){
+					echo "<tr>";
+					echo "<td>{$draftblog_value['title']}</td>";
+					echo "<td>{$draftblog_value['genre']}</td>";
+					echo "<td>{$draftblog_value['created_at']}</td>";
+					echo "<td><a href='/admin/blog/edit/{$draftblog_value['id']}/'>編集</a></td>";
+					echo "<td></td>";
+					echo "</tr>";
+			} ?>
+			</table>	
 			<?php }else{ ?>
 			<p>下書き記事はありません</p>
 			<?php } ?>

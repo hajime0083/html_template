@@ -15,14 +15,14 @@ class AdminBlogController extends BaseAdminController {
 							'blogs.id',
 							'blogs.title',
 							'blogs.draft_flg',
-							'blogs.created_at',
+							'blogs.release_date',
 							'blog_genres.name'
 							)
 					->leftJoin('blog_genres', 'blog_genres.id', '=', 'blogs.blog_genre')
 					->where('blogs.active_flg',Blog::ACTIVE_FLG_YES)
 					->where('blogs.draft_flg',Blog::DRAFT_FLG_NO)
 					->where('blogs.user_id',Auth::user()->id)
-					->orderBy('blogs.created_at');
+					->orderBy('blogs.release_date','DESC');
 		// 下書き記事の一覧を取得
 		$query_draftblog = DB::table('blogs')
 					->select(
@@ -36,7 +36,7 @@ class AdminBlogController extends BaseAdminController {
 					->where('blogs.active_flg',Blog::ACTIVE_FLG_YES)
 					->where('blogs.draft_flg',Blog::DRAFT_FLG_YES)
 					->where('blogs.user_id',Auth::user()->id)
-					->orderBy('blogs.created_at');
+					->orderBy('blogs.created_at','DESC');
 		try{
 			$blog_data = $query_blog->get();
 			$draftblog_data = $query_draftblog->get();
@@ -53,7 +53,7 @@ class AdminBlogController extends BaseAdminController {
 					'id' => $blog_value->id,
 					'title' => $blog_value->title,
 					'genre' => $blog_value->name,
-					'created_at' => date('Y年m月d日',$blog_value->created_at),
+					'created_at' => date('Y年m月d日',$blog_value->release_date),
 				);
 			}
 		}
@@ -89,21 +89,24 @@ class AdminBlogController extends BaseAdminController {
 		$body			= '';
 		$body_detail	= '';
 		$blog_genre		= NULL;
-		$active_flg		= Blog::ACTIVE_FLG_NO;
+		$active_flg		= Blog::ACTIVE_FLG_YES;
 		$release_year	= date('Y');
 		$release_month	= date('m');
 		$release_day	= date('d');
-		$release_hour	= date('h');
+		$release_hour	= date('H');
 		$release_min	= date('i');
+		$reserve_flg	= FALSE;
 		
 		if(is_null($id)){
 			// 新規登録
-			$h2 = "新規";
+			$h2				= "新規";
+			$reserve_flg	= TRUE;
 		}else{
 			// 修正
 			$query_blog = DB::table('blogs')
 						->select()
-						->where('blogs.id', $id);
+						->where('blogs.id', $id)
+						->where('blogs.user_id', Auth::user()->id);
 			try{
 				$blog_data = $query_blog->first();
 			}catch(Exception $e){
@@ -160,6 +163,7 @@ class AdminBlogController extends BaseAdminController {
 			'release_day'	=> $release_day,
 			'release_hour'	=> $release_hour,
 			'release_min'	=> $release_min,
+			'reserve_flg'	=> $reserve_flg,
 		);
 		$this->layout->nest('content','admin.blog_edit',$data);
 	}
@@ -202,6 +206,7 @@ class AdminBlogController extends BaseAdminController {
 			'draft_flg'		=> (isset($inputs['draft_flg'])?Blog::DRAFT_FLG_YES:Blog::DRAFT_FLG_NO),
 			'release_date'	=> (isset($inputs['reserve_flg'])?date('U'):$release_date),
 			'updated_at'	=> date('U'),
+			'user_id'		=> Auth::user()->id,
 		);
 		$genre_insert = '';
 		if(isset($inputs['new_genre']) && !empty($inputs['new_genre_text'])){
@@ -215,7 +220,38 @@ class AdminBlogController extends BaseAdminController {
 
 		if(is_null($id)){
 			// 新規登録
-			
+			$insert_data['created_at'] = date('U');
+			try{
+				
+				DB::beginTransaction();
+				// 新規カテゴリの登録があった場合
+				if(!empty($genre_insert)){
+					$genre = new BlogGenre();
+					foreach($genre_insert as $genre_key => $genre_value){
+						$genre->{$genre_key} = $genre_value;
+					}
+					$genre->save();
+					$insert_data['blog_genre'] = $genre->id;
+				}
+				
+				// 更新
+				$blog = new Blog();
+				foreach($insert_data as $insert_key => $insert_value){
+					$blog->{$insert_key} = $insert_value;
+				}
+				$blog->save();
+				DB::table('blogs')
+				->where('id', $id)
+				->update($insert_data);
+				
+				DB::commit();
+				
+				// 登録完了のメッセージ
+				Session::flash('message', '更新完了');
+				
+			}catch(Exception $e){
+				DB::rollback();
+			}
 		}else{
 			try{
 				DB::beginTransaction();
@@ -235,6 +271,9 @@ class AdminBlogController extends BaseAdminController {
 					$blog->{$insert_key} = $insert_value;
 				}
 				$blog->save();
+				DB::table('blogs')
+				->where('id', $id)
+				->update($insert_data);
 				
 				DB::commit();
 				
