@@ -1,13 +1,14 @@
 	<div>
 		<h2>BLOG記事(<?php echo $h2; ?>)</h2>
-		<div class="mt10">
-			<?php
-			$mesage = Session::get('message');
-			if(!empty($mesage)){
-				echo "<p class='message'>{$mesage}</p>";
-			}	
-			?>
-		</div>
+		
+		<?php
+		$mesage = Session::get('message');
+		if(!empty($mesage)){
+			echo '<div class="mt10">';
+			echo "<p class='message'>{$mesage}</p>";
+			echo '</div>';
+		}	
+		?>
 		
 		<?php echo Form::open();?>
 		

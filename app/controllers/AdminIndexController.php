@@ -38,7 +38,6 @@ class AdminIndexController extends BaseAdminController {
 	}
 	
 
-	
 	/* postIndex
 	 * ログイン処理
 	 */
@@ -53,12 +52,8 @@ class AdminIndexController extends BaseAdminController {
 			Session::flash('message', 'ログインできませんでした');
 		}
 		
-		// データのセット
-		$data = array(
-			
-		);
+		return Redirect::back();
 		
-		$this->layout->nest('content','admin.login',$data);
 	}
 	
 	/* getLogout
@@ -92,23 +87,37 @@ class AdminIndexController extends BaseAdminController {
 		
 		// 値取得
 		$inputs = Input::all();
+		$user_id = Auth::user()->id;
 		
 		// バリデーション
 		$validator = Validator::make(
+			$inputs,
 			array(
-				'name' => 'Dayle',
-				'password' => 'lamepassword',
-				'email' => 'email@example.com'
-			),
-			array(
-				'name' => 'required',
-				'password' => 'required|min:8',
-				'email' => 'required|email|unique:users'
+				'name'		=> 'required',
+				'login'		=> "required|min:4|max:8|unique:users,login,{$user_id}",
+				'pass'		=> 'max:16|confirmed',
+				'mail'		=> "required|email|max:50|unique:users,mail,{$user_id}",
 			)
 		);
 		
-		
-
+		if($validator->fails())
+		{
+			// エラーメッセージのセット
+			$messages = $validator->errors()->all();
+			$errormes = '';
+			for($i=0;$i<count($messages);$i++){
+				if(!empty($errormes)){
+					$errormes .= '<br />';
+				}
+				$errormes .= $messages[$i];
+			}
+			Session::flash('message',$errormes);
+		}
+		else
+		{
+			// OK
+			Session::flash('message','更新しました');
+		}
 		
 		return Redirect::back();
 		

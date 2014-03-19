@@ -1,5 +1,15 @@
 	<div>
 		<h2>ユーザー情報管理</h2>
+		
+		<?php
+		$mesage = Session::get('message');
+		if(!empty($mesage)){
+			echo '<div class="mt10">';
+			echo "<p class='message'>{$mesage}</p>";
+			echo '</div>';
+		}	
+		?>
+		
 		<p>
 			ユーザー情報を変更します。<br />
 			表示名は、BLOGやOFFLINEの表示部分にも反映されます。<br />
@@ -16,10 +26,10 @@
 			echo '<dd>'.Form::text('name', Input::old('name', $name)).'</dd>';
 			echo '<dt class="mt10">'.Form::label('mail', 'mail：').'</dt>';
 			echo '<dd>'.Form::text('mail', Input::old('mail', $mail)).'</dd>';
-			echo '<dt class="mt10">'.Form::label('old_password', '変更前のpass：').'</dt>';
-			echo '<dd>'.Form::password('old_password').'</dd>';
-			echo '<dt class="mt10">'.Form::label('password', '変更後のpass：').'</dt>';
-			echo '<dd>'.Form::password('password').'</dd>';
+			echo '<dt class="mt10">'.Form::label('pass', 'pass：').'</dt>';
+			echo '<dd>'.Form::password('pass').'</dd>';
+			echo '<dt class="mt10">'.Form::label('pass_confimation', 'pass(確認)：').'</dt>';
+			echo '<dd>'.Form::password('pass_confimation').'</dd>';
 			echo "</dl>";
 			echo Form::submit('更新');
 			echo Form::close();
