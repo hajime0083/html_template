@@ -1,6 +1,6 @@
 <?php
 
-class AdminBlogController extends BaseAdminController {
+class AdminBlogController extends AdminBaseController {
 
 	/* getIndex
 	 * インデックス
@@ -75,7 +75,7 @@ class AdminBlogController extends BaseAdminController {
 			'draftblog_list' => $draftblog_list,
 		);
 		
-		$this->layout->nest('content','admin.blog_index',$data);
+		$this->layout->nest('content','admin.blog.index',$data);
 	}
 	
 	/* getEdit
@@ -96,7 +96,7 @@ class AdminBlogController extends BaseAdminController {
 		$release_hour	= date('H');
 		$release_min	= date('i');
 		$reserve_flg	= FALSE;
-		
+
 		if(is_null($id)){
 			// 新規登録
 			$h2				= "新規";
@@ -127,7 +127,7 @@ class AdminBlogController extends BaseAdminController {
 			$release_year	= date('Y',$blog_data->release_date);
 			$release_month	= date('m',$blog_data->release_date);
 			$release_day	= date('d',$blog_data->release_date);
-			$release_hour	= date('h',$blog_data->release_date);
+			$release_hour	= date('H',$blog_data->release_date);
 			$release_min	= date('i',$blog_data->release_date);
 			
 		}
@@ -165,7 +165,7 @@ class AdminBlogController extends BaseAdminController {
 			'release_min'	=> $release_min,
 			'reserve_flg'	=> $reserve_flg,
 		);
-		$this->layout->nest('content','admin.blog_edit',$data);
+		$this->layout->nest('content','admin.blog.edit',$data);
 	}
 	
 	/* postEdit
@@ -175,19 +175,6 @@ class AdminBlogController extends BaseAdminController {
 	{
 		// データ取得
 		$inputs = Input::all();
-		// バリデーション
-//		$val_rules = array(
-//			'title' => array('required','max:10'),
-//			'body' => array('required','max:10'),
-//			'body_detail' => array('required','max:10'),
-//			'category' => array('required','max:10'),
-//			'category' => array('required','max:10'),
-//		);
-//		$val = Validator::make($inputs, $val_rules);
-//		if($val->fails()){
-//			// エラーがあったら処理を中断
-//			return Redirect::back()->withErrors($val)->withInput();
-//		}
 		
 		// 公開日
 		$release_date = date('U');
@@ -195,96 +182,105 @@ class AdminBlogController extends BaseAdminController {
 			// 日付け指定公開
 			$release_date = strtotime("{$inputs['release_year']}-{$inputs['release_month']}-{$inputs['release_day']} {$inputs['release_hour']}:{$inputs['release_min']}");
 		}
-		
-		// データ成型
-		$insert_data = array(
-			'title'			=> $inputs['title'],
-			'body'			=> $inputs['body'],
-			'body_detail'	=> $inputs['body_detail'],
-			'blog_genre'	=> $inputs['blog_genre'],
-			'active_flg'	=> $inputs['active_flg'],
-			'draft_flg'		=> (isset($inputs['draft_flg'])?Blog::DRAFT_FLG_YES:Blog::DRAFT_FLG_NO),
-			'release_date'	=> (isset($inputs['reserve_flg'])?date('U'):$release_date),
-			'updated_at'	=> date('U'),
-			'user_id'		=> Auth::user()->id,
-		);
-		$genre_insert = '';
-		if(isset($inputs['new_genre']) && !empty($inputs['new_genre_text'])){
-			$genre_insert = array(
-				'name'			=> $inputs['new_genre_text'],
-				'active_flg'	=> Genre::ACTIVE_FLG_YES,
-				'order'			=> 0
-			);
-		}
-		
+		$inputs['release_date'] = date("Y/m/d H:i",$release_date);
 
-		if(is_null($id)){
-			// 新規登録
-			$insert_data['created_at'] = date('U');
-			try{
-				
-				DB::beginTransaction();
-				// 新規カテゴリの登録があった場合
-				if(!empty($genre_insert)){
-					$genre = new BlogGenre();
-					foreach($genre_insert as $genre_key => $genre_value){
-						$genre->{$genre_key} = $genre_value;
-					}
-					$genre->save();
-					$insert_data['blog_genre'] = $genre->id;
+		// バリデーション
+		$validator = Validator::make($inputs,array(
+			'title'				=> "required|max:50",
+			'body'				=> "required|max:1000",
+			'body_detail'		=> "required|max:1000",
+			'release_date'		=> "required|date",
+		));
+		$valid_name = array(
+			'title'				=> "タイトル",
+			'body'				=> "本文",
+			'body_detail'		=> "本文2",
+			'new_genre_text'	=> "新しいカテゴリ",
+			'blog_genre'		=> "カテゴリ",
+			'release_date'		=> "投稿日",
+		);
+		$validator->sometimes('new_genre_text', 'required|max:15|unique:blog_genres,name', function($inputs)
+			{return isset($inputs['new_genre']);});
+		$validator->sometimes('blog_genre', 'required', function($inputs)
+			{return !isset($inputs['new_genre']);});
+		$validator->setAttributeNames($valid_name);
+		if($validator->fails()){
+			// エラーメッセージのセット
+			$messages = $validator->errors()->all();
+			$errormes = '';
+			for($i=0;$i<count($messages);$i++){
+				if(!empty($errormes)){
+					$errormes .= '<br />';
 				}
-				
-				// 更新
-				$blog = new Blog();
-				foreach($insert_data as $insert_key => $insert_value){
-					$blog->{$insert_key} = $insert_value;
-				}
-				$blog->save();
-				DB::table('blogs')
-				->where('id', $id)
-				->update($insert_data);
-				
-				DB::commit();
-				
-				// 登録完了のメッセージ
-				Session::flash('message', '更新完了');
-				
-			}catch(Exception $e){
-				DB::rollback();
+				$errormes .= $messages[$i];
 			}
+			Session::flash('message',$errormes);
 		}else{
-			try{
-				DB::beginTransaction();
-				// 新規カテゴリの登録があった場合
-				if(!empty($genre_insert)){
+
+			// データ成型
+			$insert_data = array(
+				'title'			=> $inputs['title'],
+				'body'			=> $inputs['body'],
+				'body_detail'	=> $inputs['body_detail'],
+				'blog_genre'	=> $inputs['blog_genre'],
+				'active_flg'	=> $inputs['active_flg'],
+				'draft_flg'		=> (isset($inputs['draft_flg'])?Blog::DRAFT_FLG_YES:Blog::DRAFT_FLG_NO),
+				'release_date'	=> $release_date,
+				'user_id'		=> Auth::user()->id,
+			);
+			$genre_insert = '';
+			if(isset($inputs['new_genre']) && !empty($inputs['new_genre_text'])){
+				$genre_insert = array(
+					'name'			=> $inputs['new_genre_text'],
+					'active_flg'	=> Genre::ACTIVE_FLG_YES,
+					'order'			=> 0
+				);
+			}
+			
+			// DB処理
+			// 新規カテゴリの登録があった場合
+			if(!empty($genre_insert)){
+				try{
+					DB::beginTransaction();
 					$genre = new BlogGenre();
 					foreach($genre_insert as $genre_key => $genre_value){
 						$genre->{$genre_key} = $genre_value;
 					}
 					$genre->save();
 					$insert_data['blog_genre'] = $genre->id;
+					DB::commit();
+				}catch(Exception $e){
+					DB::rollback();
+					Session::flash('message', '更新に失敗しました');
+					return Redirect::to('/admin/blog')->withInput();
 				}
-				
-				// 更新
+			}
+			
+			if(!is_null($id)){
 				$blog = Blog::find($id);
-				foreach($insert_data as $insert_key => $insert_value){
-					$blog->{$insert_key} = $insert_value;
-				}
+			}else{
+				$blog = new Blog();
+			}
+			// データセット
+			foreach($insert_data as $insert_key => $insert_value){
+				$blog->{$insert_key} = $insert_value;
+			}
+			
+			try{
+				DB::beginTransaction();
 				$blog->save();
-				DB::table('blogs')
-				->where('id', $id)
-				->update($insert_data);
-				
 				DB::commit();
-				
-				// 登録完了のメッセージ
-				Session::flash('message', '更新完了');
+				Session::flash('message', '更新完了しました');
 			}catch(Exception $e){
 				DB::rollback();
+				Session::flash('message', '更新に失敗しました');
 			}
 		}
 		
-		return Redirect::back();
+		if(!is_null($id)){
+			return Redirect::to("/admin/blog/edit/{$id}")->withInput();
+		}
+		return Redirect::to('/admin/blog/edit')->withInput();
 		
 	}
 	
@@ -304,55 +300,64 @@ class AdminBlogController extends BaseAdminController {
 			'genre_list' => $genre_list,
 		);
 		
-		$this->layout->nest('content','admin.blog_cate',$data);
+		$this->layout->nest('content','admin.blog.cate',$data);
 		
 	}
 	
 	public function postCategory(){
 		$inputs = Input::all();
-		
-		// バリデーション
-		$val_rules = array(
-			'name' => array('required','max:10'),
-			'order' => array('required','max:10'),
-		);
-		
-		$val = Validator::make($inputs, $val_rules);
-		if($val->fails()){
-			// エラーがあったら処理を中断
-			return Redirect::back()->withErrors($val)->withInput();
-		}
 
-		// 登録処理
-		$insert_data = '';
-		foreach($inputs['name'] as $name_key => $name_value){
-			$active_flg = (isset($inputs['active_flg'][$name_key])?BlogGenre::ACTIVE_FLG_YES:BlogGenre::ACTIVE_FLG_NO);
-			$insert_data[$name_key] = array(
-				'name' => $name_value,
-				'active_flg' => $active_flg,
-				'order' => $inputs['order'][$name_key]
-			);
+		// バリデーション
+		$rules = '';
+		foreach(array_keys($inputs['name']) as $name_key){
+			$rules["name.$name_key"] = "required|max:15|unique:blog_genres,name,{$name_key}";
+			$rules["order.$name_key"] = "required|integer|min:0|max:100";
 		}
-		if(is_array($insert_data)){
-			try{
-				DB::beginTransaction();
-				foreach($insert_data as $insert_key => $insert_value){
-					$blog_genre = BlogGenre::find($insert_key);
-					foreach($insert_value as $insert_value_key => $insert_value_value){
-						$blog_genre->{$insert_value_key} = $insert_value_value;
-					}
-					$blog_genre->save();
+		$validator = Validator::make($inputs,$rules);
+		if($validator->fails()){
+			// エラーメッセージのセット
+			$messages = $validator->errors()->all();
+			$errormes = '';
+			for($i=0;$i<count($messages);$i++){
+				if(!empty($errormes)){
+					$errormes .= '<br />';
 				}
-				DB::commit();
-				
-				// 登録完了のメッセージ
-				Session::flash('message', '更新完了');
-				
-			}catch(Exception $e){
-				DB::rollback();
+				$errormes .= $messages[$i];
+			}
+			Session::flash('message',$errormes);
+		}else{
+			// 登録処理
+			$insert_data = '';
+			foreach($inputs['name'] as $name_key => $name_value){
+				$active_flg = (isset($inputs['active_flg'][$name_key])?BlogGenre::ACTIVE_FLG_YES:BlogGenre::ACTIVE_FLG_NO);
+				$insert_data[$name_key] = array(
+					'name' => $name_value,
+					'active_flg' => $active_flg,
+					'order' => $inputs['order'][$name_key]
+				);
+			}
+			if(is_array($insert_data)){
+				try{
+					DB::beginTransaction();
+					foreach($insert_data as $insert_key => $insert_value){
+						$blog_genre = BlogGenre::find($insert_key);
+						foreach($insert_value as $insert_value_key => $insert_value_value){
+							$blog_genre->{$insert_value_key} = $insert_value_value;
+						}
+						$blog_genre->save();
+					}
+					DB::commit();
+
+					// 登録完了のメッセージ
+					Session::flash('message', '更新完了');
+
+				}catch(Exception $e){
+					DB::rollback();
+					Session::flash('message', '更新出来ませんでした');
+				}
 			}
 		}
-		
-		return Redirect::back();
+
+		return Redirect::to('/admin/blog/category')->withInput();
 	}
 }

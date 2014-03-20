@@ -8,4 +8,9 @@ class Blog extends Eloquent {
 	// 下書き処理
 	const DRAFT_FLG_YES	= 1;
 	const DRAFT_FLG_NO		= 0;
+	
+    protected function getDateFormat()
+    {
+        return 'U';
+    }
 }

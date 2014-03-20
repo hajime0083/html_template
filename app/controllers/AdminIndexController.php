@@ -1,6 +1,6 @@
 <?php
 
-class AdminIndexController extends BaseAdminController {
+class AdminIndexController extends AdminBaseController {
 	
 	/* getIndex
 	 * インデックス
@@ -26,14 +26,7 @@ class AdminIndexController extends BaseAdminController {
 		if(Auth::check()){
 			return Redirect::to('/admin');
 		}
-		
-//		$password = Hash::make('pass');
-//		if (Hash::check('pass', $password))
-//		{
-//			echo "pass OK";
-//		}else{
-//			echo "pass NG";
-//		}
+
 		$this->layout->nest('content','admin.login');
 	}
 	
@@ -77,7 +70,7 @@ class AdminIndexController extends BaseAdminController {
 			'name' => $loginuser_data->name,
 			'mail' => $loginuser_data->mail,
 		);
-		$this->layout->nest('content','admin.user_index',$data);
+		$this->layout->nest('content','admin.user.edit',$data);
 	}
 	
 	/* postUser
@@ -95,7 +88,7 @@ class AdminIndexController extends BaseAdminController {
 			array(
 				'name'		=> 'required',
 				'login'		=> "required|min:4|max:8|unique:users,login,{$user_id}",
-				'pass'		=> 'max:16|confirmed',
+				'pass'		=> 'min:4|max:16|confirmed',
 				'mail'		=> "required|email|max:50|unique:users,mail,{$user_id}",
 			)
 		);
@@ -115,11 +108,34 @@ class AdminIndexController extends BaseAdminController {
 		}
 		else
 		{
-			// OK
-			Session::flash('message','更新しました');
+			$insert_data = array(
+				'name' => $inputs['name'],
+				'login' => $inputs['login'],
+				'mail' => $inputs['mail'],
+			);
+			if(!empty($inputs['pass'])){
+				// 新しいパスワード設定時
+				$insert_data['pass'] = Hash::make($inputs['pass']);
+			}
+			
+			try{
+				DB::beginTransaction();
+				// 更新
+				$User = User::find($user_id);
+				foreach($insert_data as $insert_key => $insert_value){
+					$User->{$insert_key} = $insert_value;
+				}
+				$User->save();
+				
+				DB::commit();
+				Session::flash('message','更新が完了しました');
+			}catch(Exception $e){
+				DB::rollback();
+				Session::flash('message','更新出来ませんでした');
+			}
 		}
 		
-		return Redirect::back();
+		return Redirect::to('/admin/user')->withInput();
 		
 	}
 }

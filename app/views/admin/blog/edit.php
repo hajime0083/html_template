@@ -12,22 +12,22 @@
 		
 		<?php echo Form::open();?>
 		
-		<h4 class="mt20">タイトル</h4>
+		<h4 class="mt20"><?php echo Form::label('title','タイトル'); ?></h4>
 		<div class="mt10">
 			<?php echo Form::text('title',$title,array('class'=>'form_l')); ?>
 		</div>
 		
-		<h4 class="mt20">本文</h4>
+		<h4 class="mt20"><?php echo Form::label('body','本文'); ?></h4>
 		<div class="mt10">
 			<?php echo Form::textarea('body',$body); ?>
 		</div>
 		
-		<h4 class="mt20">本文2(続きを読む以下に表示されます)</h4>
+		<h4 class="mt20"><?php echo Form::label('body_detail','本文2'); ?>(続きを読む以下に表示されます)</h4>
 		<div class="mt10">
 			<?php echo Form::textarea('body_detail',$body_detail); ?>
 		</div>
 		
-		<h4 class="mt20">カテゴリ</h4>
+		<h4 class="mt20"><?php echo Form::label('new_genre_text','カテゴリ'); ?></h4>
 		<div class="mt10">
 			<?php echo Form::label('new_genre','新しいカテゴリを追加：'); ?>
 			<?php echo Form::checkbox('new_genre',1,FALSE); ?>

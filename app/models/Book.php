@@ -1,5 +1,5 @@
 <?php
-class Offline extends Eloquent {
+class Book extends Eloquent {
 	// 表示非表示
 	const ACTIVE_FLG_YES	= 1;
 	const ACTIVE_FLG_NO		= 0;
@@ -20,4 +20,10 @@ class Offline extends Eloquent {
 	const SOLD_FLG_NOTMENY	= 2;	// 残部数少
 	const SOLD_FLG_YES		= 1;	// 売り切れ
 	const SOLD_FLG_NO		= 0;	// 在庫有り
+	
+    protected function getDateFormat()
+    {
+        return 'U';
+    }
+	
 }

@@ -1,6 +1,6 @@
 <?php
 
-class PictxtController extends BaseController {
+class UserPictxtController extends UserBaseController {
 
 	/* getPictxt
 	 * 作品一覧ページ

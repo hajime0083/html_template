@@ -13,23 +13,22 @@
 		<p>
 			ユーザー情報を変更します。<br />
 			表示名は、BLOGやOFFLINEの表示部分にも反映されます。<br />
-			パスワードを変更したい場合は変更前、後を両方入力の上登録してください。<br />
-			両方未入力だった場合は変更されません。<br />
+			パスワードは両方未入力の場合更新されません<br />
 		</p>
 		<div class="mt10">
 			<?php 
 			echo Form::open();
 			echo "<dl>";
 			echo '<dt>'.Form::label('login', 'ID：').'</dt>';
-			echo '<dd>'.Form::text('login', Input::old('login', $login)).'</dd>';
+			echo '<dd>'.Form::text('login', $login).'</dd>';
 			echo '<dt class="mt10">'.Form::label('name', '表示名：').'</dt>';
-			echo '<dd>'.Form::text('name', Input::old('name', $name)).'</dd>';
+			echo '<dd>'.Form::text('name', $name).'</dd>';
 			echo '<dt class="mt10">'.Form::label('mail', 'mail：').'</dt>';
-			echo '<dd>'.Form::text('mail', Input::old('mail', $mail)).'</dd>';
+			echo '<dd>'.Form::text('mail', $mail).'</dd>';
 			echo '<dt class="mt10">'.Form::label('pass', 'pass：').'</dt>';
 			echo '<dd>'.Form::password('pass').'</dd>';
-			echo '<dt class="mt10">'.Form::label('pass_confimation', 'pass(確認)：').'</dt>';
-			echo '<dd>'.Form::password('pass_confimation').'</dd>';
+			echo '<dt class="mt10">'.Form::label('pass_confirmation', 'pass(確認)：').'</dt>';
+			echo '<dd>'.Form::password('pass_confirmation').'</dd>';
 			echo "</dl>";
 			echo Form::submit('更新');
 			echo Form::close();

@@ -18,6 +18,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var array
 	 */
 	protected $hidden = array('pass');
+	
+	public $timestamps = FALSE;	// created_at,updated_atは使わない
 
 	/**
 	 * Get the unique identifier for the user.

@@ -1,5 +1,15 @@
 	<div>
 		<h2>ブログカテゴリ管理</h2>
+		
+		<?php
+		$mesage = Session::get('message');
+		if(!empty($mesage)){
+			echo '<div class="mt10">';
+			echo "<p class='message'>{$mesage}</p>";
+			echo '</div>';
+		}	
+		?>
+		
 		<p class="mt10">
 			ブログに登録されているカテゴリを管理します。<br />
 			非表示にしたカテゴリに結びついている記事は表示されなくなるため注意してください。<br />

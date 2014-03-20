@@ -1,9 +1,14 @@
 <?php
 
-class BaseController extends Controller {
+class AdminBaseController extends Controller {
 	
-	public $layout='template.base';
-
+	var $login			= FALSE;
+	public $layout		='template.adminbase';
+	
+	public function __construct() {
+		 $this->login = Auth::check();
+	}
+	
 	/**
 	 * Setup the layout used by the controller.
 	 *
@@ -14,12 +19,8 @@ class BaseController extends Controller {
 		if ( ! is_null($this->layout))
 		{
 			$this->layout = View::make($this->layout);
-			// テンプレートへのデータセット
-			$this->layout->main_img	= FALSE;
+			$this->layout->login = $this->login;
 			$this->layout->sitename	= Config::get('siteconfig.sitename');
-			$this->layout->since_start	= '2009';
-			$this->layout->js		= '';
-			$this->layout->css	= '';
 		}
 	}
 
