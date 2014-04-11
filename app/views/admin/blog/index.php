@@ -1,5 +1,6 @@
 	<div>
 		<h2>BLOG記事編集</h2>
+		<h4 class="mt20">記事管理</h4>
 		<div class="mt10">
 			<a href="/admin/blog/edit/">新規登録</a>
 		</div>
@@ -29,7 +30,8 @@
 					echo "<td></td>";
 					echo "</tr>";
 			} ?>
-			</table>	
+			</table>
+			<p class="mt10"><a href="/admin/blog/list">もっと見る</a></p>
 			<?php }else{ ?>
 			<p>投稿記事はありません</p>
 			<?php } ?>
@@ -55,7 +57,8 @@
 					echo "<td></td>";
 					echo "</tr>";
 			} ?>
-			</table>	
+			</table>
+			<p class="mt10"><a href="/admin/blog/draftlist">もっと見る</a></p>
 			<?php }else{ ?>
 			<p>下書き記事はありません</p>
 			<?php } ?>

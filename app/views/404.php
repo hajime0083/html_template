@@ -25,9 +25,10 @@
 	<nav class="floatBox">
 		<h1 class="floatL"><a href="/">SUISOU</a></h1>
 		<ul class="floatBox floatR">
-			<li class="floatL"><a href="/">menu1</a>/</li>
-			<li class="floatL"><a href="/page_1.html">menu2</a>/</li>
-			<li class="floatL"><a href="/page_2.html">menu3</a>/</li>
+			<li class="floatL"><a href="/">TOP</a>/</li>
+			<li class="floatL"><a href="/pictxt/">PIC&AMP;TEXT</a>/</li>
+			<li class="floatL"><a href="/blog/">BLOG</a>/</li>
+			<li class="floatL"><a href="/off/">OFFLINE</a>/</li>
 		</ul>
 	</nav>
 </header>

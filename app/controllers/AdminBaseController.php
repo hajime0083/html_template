@@ -20,7 +20,7 @@ class AdminBaseController extends Controller {
 		{
 			$this->layout = View::make($this->layout);
 			$this->layout->login = $this->login;
-			$this->layout->sitename	= Config::get('siteconfig.sitename');
+			$this->layout->sitename	= Config::get('my_config.sitename');
 		}
 	}
 

@@ -10,9 +10,10 @@
 	<![endif]-->
 	<script type="text/javascript" src="/js/jquery.js"></script>
 	<script type="text/javascript" src="/js/base.js"></script>
+	<?php echo @$js; ?>
 	<link type="text/css" rel="stylesheet" href="/css/html5-doctor-reset-stylesheet.css" />
 	<link type="text/css" rel="stylesheet" href="/css/admin.css" />
-
+	<?php echo @$css; ?>
 </head>
 <body>
 
@@ -30,12 +31,14 @@
 		<h4 class="mt10">Admin Menu</h4>
 		<nav class="admin_menu">
 			<ul>
+				<li><a href="/admin/top/">サイトトップ管理</a></li>
 				<li><a href="/admin/blog/">BLOG</a></li>
-				<li><a href="/admin/pictxt/">PIC & TXT</a></li>
-				<li><a href="/admin/offline/">OFFLINE</a></li>
-				<li><a href="/admin/link/">LINK</a></li>
-				<li><a href="/admin/genre/">GENRE</a></li>
-				<li><a href="/admin/user/">USER</a></li>
+				<li><a href="/admin/pic/">イラスト管理</a></li>
+				<li><a href="/admin/txt/">小説管理</a></li>
+				<li><a href="/admin/offline/">オフライン</a></li>
+				<li><a href="/admin/genre/">ジャンル管理</a></li>
+				<li><a href="/admin/group/">シリーズ管理</a></li>
+				<li><a href="/admin/user/">ユーザー情報</a></li>
 			</ul>
 			<ul class="mt20">
 				<li><a href="/logout">LOGOUT</a></li>

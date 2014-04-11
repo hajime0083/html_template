@@ -10,7 +10,7 @@
 		}	
 		?>
 		
-		<?php echo Form::open();?>
+		<?php echo Form::open(array('enctype'=>'multipart/form-data'));?>
 		
 		<h4 class="mt20"><?php echo Form::label('title','タイトル'); ?></h4>
 		<div class="mt10">
@@ -18,13 +18,33 @@
 		</div>
 		
 		<h4 class="mt20"><?php echo Form::label('body','本文'); ?></h4>
+		<h4 class="mt20"><?php echo Form::label('img_1','画像１'); ?></h4>
 		<div class="mt10">
-			<?php echo Form::textarea('body',$body); ?>
+			<?php echo Form::file('img1'); ?><br />
+			<?php echo Form::hidden('old_img1',$img1); ?>
+			<?php if(!empty($img1)){
+				echo "<div class='imgLiquid' style='width:150px; height:100px;'><img src='/img/blog/{$img1}'></div>";
+				echo Form::label('del_img1','削除：');
+				echo Form::checkbox('del_img1',1);
+			}?>
+		</div>
+		<div class="mt10">
+			<?php echo Form::textarea('body',$body,array('class'=>'medium')); ?>
 		</div>
 		
 		<h4 class="mt20"><?php echo Form::label('body_detail','本文2'); ?>(続きを読む以下に表示されます)</h4>
+		<h4 class="mt20"><?php echo Form::label('img_2','画像２'); ?></h4>
 		<div class="mt10">
-			<?php echo Form::textarea('body_detail',$body_detail); ?>
+			<?php echo Form::file('img2'); ?><br />
+			<?php echo Form::hidden('old_img2',$img2); ?>
+			<?php if(!empty($img1)){
+				echo "<div class='imgLiquid' style='width:150px; height:100px;'><img src='/img/blog/{$img2}'></div>";
+				echo Form::label('del_img2','削除：');
+				echo Form::checkbox('del_img2',1);
+			}?>
+		</div>
+		<div class="mt10">
+			<?php echo Form::textarea('body_detail',$body_detail,array('class'=>'medium')); ?>
 		</div>
 		
 		<h4 class="mt20"><?php echo Form::label('new_genre_text','カテゴリ'); ?></h4>

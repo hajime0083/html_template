@@ -22,6 +22,7 @@ class AdminBlogController extends AdminBaseController {
 					->where('blogs.active_flg',Blog::ACTIVE_FLG_YES)
 					->where('blogs.draft_flg',Blog::DRAFT_FLG_NO)
 					->where('blogs.user_id',Auth::user()->id)
+					->limit(5)
 					->orderBy('blogs.release_date','DESC');
 		// 下書き記事の一覧を取得
 		$query_draftblog = DB::table('blogs')
@@ -36,6 +37,7 @@ class AdminBlogController extends AdminBaseController {
 					->where('blogs.active_flg',Blog::ACTIVE_FLG_YES)
 					->where('blogs.draft_flg',Blog::DRAFT_FLG_YES)
 					->where('blogs.user_id',Auth::user()->id)
+					->limit(5)
 					->orderBy('blogs.created_at','DESC');
 		try{
 			$blog_data = $query_blog->get();
@@ -78,16 +80,83 @@ class AdminBlogController extends AdminBaseController {
 		$this->layout->nest('content','admin.blog.index',$data);
 	}
 	
+	public function getList()
+	{
+		$nowpage = Input::get('page');
+		
+		if((int)$nowpage < 1){
+			$nowpage = 1;
+		}
+		
+		$limit = 20;
+		$offset = ($nowpage-1)*$limit;
+		
+		$query_blog = DB::table('blogs')
+					->select(
+							DB::raw('SQL_CALC_FOUND_ROWS blogs.id','countall'),
+							'blogs.id',
+							'blogs.title',
+							'blogs.draft_flg',
+							'blogs.release_date',
+							'blog_genres.name'
+							)
+					->leftJoin('blog_genres', 'blog_genres.id', '=', 'blogs.blog_genre')
+					->where('blogs.active_flg',Blog::ACTIVE_FLG_YES)
+					->where('blogs.draft_flg',Blog::DRAFT_FLG_NO)
+					->where('blogs.user_id',Auth::user()->id)
+					->orderBy('blogs.release_date','DESC')
+					->limit($limit)
+					->offset($offset);
+		try{
+			$blog_data = $query_blog->get();
+			$allcount_data = DB::select('SELECT FOUND_ROWS() as countall');
+			$allcount = $allcount_data[0]->countall;
+		}catch(Exception $e){
+			$blog_data = '';
+			$allcount = 0;
+		}
+
+		// データ成型
+		$blog_list = '';
+		if(!empty($blog_data)){
+			foreach($blog_data as $blog_value){
+				$blog_list[] = array(
+					'id' => $blog_value->id,
+					'title' => $blog_value->title,
+					'genre' => $blog_value->name,
+					'created_at' => date('Y年m月d日',$blog_value->release_date),
+				);
+			}
+		}
+		
+		// ページネーション
+		$paginator = Paginator::make($blog_list, $allcount, $limit);
+		$paginator->setBaseUrl('/admin/blog/list');
+		
+		// データのセット
+		$data = array(
+			'type' => 'list',
+			'blog_list' => $blog_list,
+			'paginator' => $paginator,
+		);
+		$this->layout->nest('content','admin.blog.list',$data);
+	}
+	
 	/* getEdit
 	 * 新規登録OR修正
 	 */
 	public function getEdit($id = NULL)
 	{
+		$this->layout->js		.= HTML::script('js/imgLiquid-min.js');
+		$this->layout->js		.= HTML::script('js/admin_blog.js');
+		
 		// 初期化
 		$h2				= "更新";
 		$title			= '';
 		$body			= '';
 		$body_detail	= '';
+		$img1			= '';
+		$img2			= '';
 		$blog_genre		= NULL;
 		$active_flg		= Blog::ACTIVE_FLG_YES;
 		$release_year	= date('Y');
@@ -122,6 +191,8 @@ class AdminBlogController extends AdminBaseController {
 			$title			= $blog_data->title;
 			$body			= $blog_data->body;
 			$body_detail	= $blog_data->body_detail;
+			$img1			= $blog_data->img1;
+			$img2			= $blog_data->img2;
 			$blog_genre		= $blog_data->blog_genre;
 			$active_flg		= $blog_data->active_flg;
 			$release_year	= date('Y',$blog_data->release_date);
@@ -156,6 +227,8 @@ class AdminBlogController extends AdminBaseController {
 			'body'			=> $body,
 			'body_detail'	=> $body_detail,
 			'blog_genre'	=> $blog_genre,
+			'img1'			=> $img1,
+			'img2'			=> $img2,
 			'genre_list'	=> $genre_list,
 			'active_flg'	=> $active_flg,
 			'release_year'	=> $release_year,
@@ -266,8 +339,35 @@ class AdminBlogController extends AdminBaseController {
 				$blog->{$insert_key} = $insert_value;
 			}
 			
+			// 画像
+			$filename			= ceil(microtime(true)*1000);
+			$destinationPath	= Config::get('my_config.img_path.blog');
+			$img1				= @$inputs['img1'];
+			$img2				= @$inputs['img2'];
+			
 			try{
 				DB::beginTransaction();
+				
+				// 画像アップロード
+				if(!empty($img1) && !isset($inputs['del_img1'])){
+					$ext			= $img1->getClientOriginalExtension(); 
+					$upload_success	= $img1->move($destinationPath, $filename.'_img1.'.$ext);
+					$blog->img1 = $filename.'_img1.'.$ext;
+				}elseif(isset($inputs['del_img1']) && !empty($inputs['old_img1'])){
+					// 既存画像削除
+					$blog->img1 = NULL;
+					File::delete($destinationPath.$inputs['old_img1']);
+				}
+				if(!empty($img2) && !isset($inputs['del_img2'])){
+					$ext			= $img2->getClientOriginalExtension(); 
+					$upload_success	= $img2->move($destinationPath, $filename.'_img2.'.$ext);
+					$blog->img2 = $filename.'_img2.'.$ext;
+				}elseif(isset($inputs['del_img2']) && !empty($inputs['old_img2'])){
+					// 既存画像削除
+					$blog->img2 = NULL;
+					File::delete($destinationPath.$inputs['old_img2']);
+				}
+				
 				$blog->save();
 				DB::commit();
 				Session::flash('message', '更新完了しました');

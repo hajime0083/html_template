@@ -152,7 +152,16 @@ input[type='text'].form_l{
 	width:500px;
 }
 textarea{
-	width:500px;
+	width:100%;
+	height: 50px;
+	font-size: 12px;
+	line-height: 120%;
+}
+textarea.medium{
+	height: 200px;
+}
+textarea.large{
+	height: 800px;
 }
 .form_s{
 	width:50px;
@@ -219,4 +228,27 @@ input[type='button']{
 .mr20
 {
 	margin-right:20px;
+}
+/* pagination */
+div.pager{
+	width: 100%;
+	margin: 10px 0;
+}
+ul.pagination{
+	width: 20%;
+	list-style: none;
+	zoom: 100%;
+	margin: 0 auto;
+}
+ul.pagination:after{
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	display: block;
+	content: ".";
+	font-size: 0.1em;
+}
+ul.pagination li{
+	float: left;
+	margin-right: 10px;
 }

@@ -1,5 +1,25 @@
 	<div>
 		<h2>オフライン管理</h2>
+		
+		<?php
+		$mesage = Session::get('message');
+		if(!empty($mesage)){
+			echo '<div class="mt10">';
+			echo "<p class='message'>{$mesage}</p>";
+			echo '</div>';
+		}	
+		?>
+		<h4 class="mt20">イベント予定</h4>
+		<div class="mt10">
+			<?php 
+			echo Form::open();
+			echo Form::textarea('event',$event);
+			echo Form::submit('イベント更新');
+			echo Form::close();
+			?>
+		</div>
+		
+		<h4 class="mt20">在庫管理</h4>
 		<div class="mt10">
 			<a href="/admin/offline/edit/">新規登録</a>
 		</div>

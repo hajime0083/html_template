@@ -16,7 +16,7 @@ class UserBaseController extends Controller {
 			$this->layout = View::make($this->layout);
 			// テンプレートへのデータセット
 			$this->layout->main_img	= FALSE;
-			$this->layout->sitename	= Config::get('siteconfig.sitename');
+			$this->layout->sitename	= Config::get('my_config.sitename');
 			$this->layout->since_start	= '2009';
 			$this->layout->js		= '';
 			$this->layout->css	= '';
